@@ -1,0 +1,45 @@
+# Build artifacts
+/build/
+.gradle/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# IDE-specific files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Dependency directories
+/node_modules/
+/bower_components/
+
+# Environment variables and secrets
+.env
+application*.properties
+application*.yml
+!application.properties.example
+!application.yml.example
+
+# Test reports and coverage
+/test-results/
+/coverage/
+
+# Gradle wrapper files (except the wrapper itself)
+!gradle/wrapper/gradle-wrapper.jar
+gradle-wrapper.properties

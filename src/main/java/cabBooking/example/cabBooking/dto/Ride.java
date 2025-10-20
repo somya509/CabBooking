@@ -20,7 +20,6 @@ public class Ride {
     private long requestedAt;
      RideStatus status;
 
-    public Ride(location destination, location source, UUID rideId, Passenger user, UUID uuid, Driver driver, long l) {
 
-    }
+
 }

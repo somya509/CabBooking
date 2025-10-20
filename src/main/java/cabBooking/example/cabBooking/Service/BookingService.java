@@ -1,36 +1,42 @@
 package cabBooking.example.cabBooking.Service;
 
-import cabBooking.example.cabBooking.dto.Driver;
-import cabBooking.example.cabBooking.dto.Ride;
-import cabBooking.example.cabBooking.dto.Passenger;
-import cabBooking.example.cabBooking.dto.location;
+import cabBooking.example.cabBooking.dto.*;
 
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BookingService {
 
-  private final  List<Driver> drivers =new ArrayList<>();
+    private final  List<Driver> drivers =new ArrayList<>();
+    Set<String> assignedDriver= ConcurrentHashMap.newKeySet();
 
-  private final Map<UUID, Ride> rides= new HashMap<UUID, Ride>();
+    private final Map<UUID, Ride> rides= new HashMap<UUID, Ride>();
     void addDriver(Driver d) { drivers.add(d); }
-   public synchronized Ride   bookRide(location destination , location source, Passenger user ) {
+    public synchronized Ride   bookRide(location destination , location source, Passenger user ) {
 
-       for (Driver driver : drivers) {
-           if (driver.isAvailabilty()) {
+        for (Driver driver : drivers) {
+            if (driver.isAvailabilty()) {
 
-               driver.setAvailabilty(false);
-               UUID rideId = UUID.randomUUID();
-               Ride ride = new Ride(destination, source, rideId, user, UUID.randomUUID(), driver, System.currentTimeMillis());
-               rides.put(rideId, ride);
-               System.out.println("driver" +driver.getName() + "got assign to rideId" +ride.getRideId());
-               return ride;
-           }
-           System.out.println("no drivers are avialble");
-       }
+                driver.setAvailabilty(false);
+                String driverName= driver.getName() !=null ? driver.getName(): "driver" +driver.hashCode();
+                boolean isdublicateDriver= !assignedDriver.add(driverName);
+                if (isdublicateDriver)
+                {
+                    System.out.println("duplicatedriver"+driverName+"");
+                }
+                UUID rideId = UUID.randomUUID();
+                Ride ride = new Ride(destination, source, rideId, user, UUID.randomUUID(), driver, System.currentTimeMillis(), RideStatus.REQUESTED);
+                System.out.println("✅ Ride created: " + ride);
+                rides.put(rideId, ride);
+                System.out.println("driver" +driver.getName() + "got assign to rideId" +ride.getRideId());
+                return ride;
+            }
+            System.out.println("no drivers are avialble");
+        }
 
-       return null;
-   }
+        return null;
+    }
 
     public static void main(String[] args) {
         BookingService bookingService=new BookingService();
@@ -43,9 +49,9 @@ public class BookingService {
 
         Passenger user1 =new Passenger(765,"SOMYA",897654344);
 
-location source =new location(1026d ,1026d);
-location destination =new location(1086d,1086d);
-        bookingService.bookRide(source,destination,user1);
+        location source =new location(1026d ,1026d);
+        location destination =new location(1086d,1086d);
+        bookingService.bookRide(destination,source,user1);
     }
 
 }

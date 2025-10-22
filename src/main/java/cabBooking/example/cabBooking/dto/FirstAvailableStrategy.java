@@ -9,4 +9,5 @@ public class FirstAvailableStrategy implements MatchingStrategy {
     public Optional<Driver> findDriver(location location, List<Driver> driverCondidates) {
         return driverCondidates.stream().filter(Driver::isAvailabilty).findFirst();
     }
+
 }

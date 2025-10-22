@@ -9,6 +9,8 @@ public class NearestAvailableStrategy implements MatchingStrategy{
     public Optional<Driver> findDriver(location location, List<Driver> driverCondidates) {
         return driverCondidates.stream().filter(Driver::isAvailabilty).min(Comparator.comparingDouble(d-> d.getLocation().getLatitude()-location.getLatitude()));
     }
+
+
     private static double distance(location a,location b)
     {
        double dx=a.getLatitude()-a.getLatitude();

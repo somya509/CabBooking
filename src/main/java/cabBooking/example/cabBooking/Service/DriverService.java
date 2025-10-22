@@ -12,8 +12,8 @@ public class DriverService {
         List<Driver> drivers= Arrays.asList(new Driver(45,769,true,new location(64,98),36,"soh",006));
         List<Driver> drivers1= Arrays.asList(new Driver(49,799,false,new location(64,86),76,"sgh",986));
         List<Driver> drivers3= Arrays.asList(new Driver(48,749,true,new location(60,876),776,"sghugjh",346));
-        List<location> userlocation=Arrays.asList(new location(5,8),
-                new location(6,8),new location(5,6));
+        List<location> userlocation=Arrays.asList(new location(5d,8d),
+                new location(6d,8d),new location(5d,6d));
 
 
         MatchingStrategy matchingStrategy=new NearestAvailableStrategy();
@@ -40,9 +40,7 @@ public class DriverService {
 
             });
         }
-
         executor.shutdown();
-
     }
 
 }

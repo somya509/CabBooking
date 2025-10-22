@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Random;
 import java.util.UUID;
 
 
@@ -34,4 +35,23 @@ private location location;
         return "driver";
     }
 
+    // 👇 NEW METHODS for accept/reject
+    public boolean acceptRide(Ride ride) {
+        System.out.println(getName() + " accepted ride " + ride.getRideId());
+        this.availabilty = false;
+        ride.setStatus(RideStatus.ACCEPTED);
+        return true;
+    }
+
+    public boolean rejectRide(Ride ride) {
+        System.out.println(getName() + " rejected ride " + ride.getRideId());
+        this.availabilty = true;
+        ride.setStatus(RideStatus.REJECTED);
+        return false;
+    }
+
+    // Optional simulation method (used for testing)
+    public boolean simulateDecision() {
+        return new Random().nextBoolean(); // Randomly accept or reject
+    }
 }
